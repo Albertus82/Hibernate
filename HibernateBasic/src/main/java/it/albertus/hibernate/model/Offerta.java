@@ -21,9 +21,9 @@ public class Offerta {
 	private BigDecimal importo;
 
 	@Id
-	@SequenceGenerator(name="seq_offerte", sequenceName="SEQ_OFFERTE")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_offerte")
-	@Column(name="ID_OFFERTA")
+	@SequenceGenerator(name = "seq_offerte", sequenceName = "SEQ_OFFERTE")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_offerte")
+	@Column(name = "ID_OFFERTA")
 	public Long getId() {
 		return id;
 	}
@@ -31,9 +31,9 @@ public class Offerta {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@ManyToOne
-	@JoinColumn(name="ID_OGGETTO")
+	@JoinColumn(name = "ID_OGGETTO")
 	public Oggetto getOggetto() {
 		return oggetto;
 	}
@@ -42,7 +42,7 @@ public class Offerta {
 		this.oggetto = oggetto;
 	}
 
-	@Column(name="IMPORTO")
+	@Column(name = "IMPORTO")
 	public BigDecimal getImporto() {
 		return importo;
 	}

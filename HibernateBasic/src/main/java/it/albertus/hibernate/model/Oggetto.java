@@ -11,7 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="OGGETTI")
+@Table(name = "OGGETTI")
 public class Oggetto {
 
 	private Long id;
@@ -19,9 +19,9 @@ public class Oggetto {
 	private Date dataInserimento;
 
 	@Id
-	@SequenceGenerator(name="seq_oggetti", sequenceName="SEQ_OGGETTI")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_oggetti")
-	@Column(name="ID_OGGETTO")
+	@SequenceGenerator(name = "seq_oggetti", sequenceName = "SEQ_OGGETTI")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_oggetti")
+	@Column(name = "ID_OGGETTO")
 	public Long getId() {
 		return id;
 	}
@@ -30,7 +30,7 @@ public class Oggetto {
 		this.id = id;
 	}
 
-	@Column(name="DESCRIZIONE")
+	@Column(name = "DESCRIZIONE")
 	public String getDescrizione() {
 		return descrizione;
 	}
@@ -39,7 +39,7 @@ public class Oggetto {
 		this.descrizione = descrizione;
 	}
 
-	@Column(name="DATA_INSERIMENTO")
+	@Column(name = "DATA_INSERIMENTO")
 	public Date getDataInserimento() {
 		return dataInserimento;
 	}
