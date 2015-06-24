@@ -11,7 +11,7 @@ import javax.persistence.Persistence;
 
 public class Main {
 
-	public static void main(String... args) {
+	public static final void main(String... args) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa_test");
 		System.out.println("Inizializzazione completata.");
 
