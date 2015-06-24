@@ -1,7 +1,9 @@
 package it.albertus.hibernate;
 
+import it.albertus.hibernate.model.Offerta;
 import it.albertus.hibernate.model.Oggetto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
@@ -20,16 +22,20 @@ public class Main {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 
-		Oggetto o = new Oggetto();
-		o.setDescrizione("Oggetto di prova n. 1");
-		o.setDataInserimento(new Date());
+		Oggetto oggetto = new Oggetto();
+		oggetto.setDescrizione("Oggetto di prova n. 1");
+		oggetto.setDataInserimento(new Date());
 
-		em.persist(o);
+		Offerta offerta = new Offerta();
+		offerta.setImporto(new BigDecimal(1000));
+		offerta.setOggetto(oggetto);
+
+		em.persist(offerta);
 
 		tx.commit();
 
 		em.close();
-		
+
 		System.out.println("Fine!");
 	}
 }
