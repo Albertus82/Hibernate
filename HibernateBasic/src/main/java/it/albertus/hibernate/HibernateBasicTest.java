@@ -74,7 +74,7 @@ public class HibernateBasicTest {
 	private void selectJpa() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Oggetto> cq = cb.createQuery(Oggetto.class);
-		Root<Oggetto> c = cq.from(Oggetto.class);
+		Root<Oggetto> c = cq.from(Oggetto.class); // TODO Rimuovere la CROSS JOIN.
 		cq.select(cq.from(Oggetto.class)).where(cb.equal(c.get("descrizione"), "Macchina fotografica reflex Nikon F100"));
 		List<Oggetto> results = em.createQuery(cq).getResultList();
 		System.out.println(results);
