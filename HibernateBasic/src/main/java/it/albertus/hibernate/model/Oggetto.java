@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,7 +53,8 @@ public class Oggetto {
 		this.dataInserimento = dataInserimento;
 	}
 
-	@OneToMany(mappedBy = "oggetto")
+	// La relazione e' gestita dall'altro lato!
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, mappedBy = "oggetto")
 	public Set<Offerta> getOfferte() {
 		return offerte;
 	}
@@ -62,8 +64,13 @@ public class Oggetto {
 	}
 
 	public void addOfferta(Offerta offerta) {
-		offerta.setOggetto(this);
+		offerta.setOggetto(this); // Serve a permettere il salvataggio dell'offerta!
 		offerte.add(offerta);
+	}
+
+	@Override
+	public String toString() {
+		return "id=" + id + ", descrizione=" + descrizione + ", dataInserimento=" + dataInserimento + ", #offerte=" + offerte.size();
 	}
 
 }

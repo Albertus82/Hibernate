@@ -34,7 +34,7 @@ public class Offerta {
 	}
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_OGGETTO")
+	@JoinColumn(name = "ID_OGGETTO", nullable = false)
 	public Oggetto getOggetto() {
 		return oggetto;
 	}
@@ -50,6 +50,11 @@ public class Offerta {
 
 	public void setImporto(BigDecimal importo) {
 		this.importo = importo;
+	}
+
+	@Override
+	public String toString() {
+		return "id=" + id + ", oggetto={" + oggetto + "}, importo=" + importo;
 	}
 
 }
