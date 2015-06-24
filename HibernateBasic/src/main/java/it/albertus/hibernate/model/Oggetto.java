@@ -20,7 +20,7 @@ public class Oggetto {
 
 	@Id
 	@SequenceGenerator(name = "seq_oggetti", sequenceName = "SEQ_OGGETTI")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_oggetti")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_oggetti")
 	@Column(name = "ID_OGGETTO")
 	public Long getId() {
 		return id;

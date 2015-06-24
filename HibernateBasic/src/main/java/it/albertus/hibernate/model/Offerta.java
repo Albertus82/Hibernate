@@ -22,7 +22,7 @@ public class Offerta {
 
 	@Id
 	@SequenceGenerator(name = "seq_offerte", sequenceName = "SEQ_OFFERTE")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_offerte")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_offerte")
 	@Column(name = "ID_OFFERTA")
 	public Long getId() {
 		return id;
