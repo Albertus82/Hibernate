@@ -63,27 +63,18 @@ public class HibernateBasicTest {
 		System.out.println(">>> Fine programma.");
 	}
 
-	private void selectHibernate() {
-		Session session = em.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Oggetto.class);
-		criteria.add(Restrictions.eq("descrizione", "Macchina fotografica reflex Nikon F100"));
-		List<Oggetto> results = criteria.list();
-		System.out.println(results);
-	}
-
-	private void selectJpa() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Oggetto> cq = cb.createQuery(Oggetto.class);
-		Root<Oggetto> c = cq.from(Oggetto.class); // TODO Rimuovere la CROSS JOIN.
-		cq.select(cq.from(Oggetto.class)).where(cb.equal(c.get("descrizione"), "Macchina fotografica reflex Nikon F100"));
-		List<Oggetto> results = em.createQuery(cq).getResultList();
-		System.out.println(results);
+	private void cleanup() {
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		em.createNativeQuery("DELETE FROM offerte").executeUpdate();
+		em.createQuery("DELETE FROM it.albertus.hibernate.model.Oggetto").executeUpdate();
+		tx.commit();
 	}
 
 	private void insert() {
 		EntityTransaction tx = em.getTransaction();
-		tx.begin();
 
+		tx.begin();
 		Oggetto oggetto = new Oggetto();
 		oggetto.setDescrizione("Macchina fotografica reflex Nikon F100");
 		oggetto.setDataInserimento(new Date());
@@ -98,16 +89,42 @@ public class HibernateBasicTest {
 
 		em.persist(offerta1);
 		em.persist(offerta2);
+		tx.commit();
 
+		// Inizio una seconda transazione...
+		tx.begin();
+		Oggetto oggetto2 = new Oggetto();
+		oggetto2.setDescrizione("Obiettivo Nikon 50mm F1.4");
+		oggetto2.setDataInserimento(new Date());
+
+		Offerta offerta3 = new Offerta();
+		offerta3.setImporto(new BigDecimal(500));
+
+		Offerta offerta4 = new Offerta();
+		offerta4.setImporto(new BigDecimal("550.01"));
+
+		oggetto2.addOfferta(offerta3);
+		oggetto2.addOfferta(offerta4);
+
+		em.persist(oggetto2);
 		tx.commit();
 	}
 
-	private void cleanup() {
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.createNativeQuery("DELETE FROM offerte").executeUpdate();
-		em.createQuery("DELETE FROM it.albertus.hibernate.model.Oggetto").executeUpdate();
-		tx.commit();
+	private void selectJpa() {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Oggetto> criteria = builder.createQuery(Oggetto.class);
+		Root<Oggetto> root = criteria.from(Oggetto.class);
+		criteria.select(root).where(builder.equal(root.get("descrizione"), "Macchina fotografica reflex Nikon F100"));
+		List<Oggetto> results = em.createQuery(criteria).getResultList();
+		System.out.println(results);
+	}
+
+	private void selectHibernate() {
+		Session session = em.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Oggetto.class);
+		criteria.add(Restrictions.like("descrizione", "Obiettivo%"));
+		List<Oggetto> results = criteria.list();
+		System.out.println(results);
 	}
 
 }
