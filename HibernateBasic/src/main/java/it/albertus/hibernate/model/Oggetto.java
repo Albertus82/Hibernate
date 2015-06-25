@@ -54,7 +54,7 @@ public class Oggetto {
 	}
 
 	// La relazione e' gestita dall'altro lato!
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, mappedBy = "oggetto")
+	@OneToMany(mappedBy = "oggetto", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	public Set<Offerta> getOfferte() {
 		return offerte;
 	}
