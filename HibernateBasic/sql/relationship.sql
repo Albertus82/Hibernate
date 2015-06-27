@@ -2,6 +2,7 @@ CREATE SEQUENCE seq_offerte;
 
 CREATE SEQUENCE seq_oggetti;
 
+
 CREATE TABLE offerte
 (
     id_offerta   NUMBER (20, 0) NOT NULL,
@@ -14,6 +15,7 @@ ALTER TABLE offerte
 ADD CONSTRAINT pk_offerte PRIMARY KEY (id_offerta)
 USING INDEX
 /
+
 
 CREATE TABLE oggetti
 (

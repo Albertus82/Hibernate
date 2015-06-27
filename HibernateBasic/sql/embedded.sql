@@ -1,5 +1,6 @@
 CREATE SEQUENCE seq_persone;
 
+
 CREATE TABLE persone
 (
     id_persona   NUMBER (20, 0) NOT NULL,
