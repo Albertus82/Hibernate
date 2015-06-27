@@ -1,4 +1,4 @@
-package it.albertus.hibernate.model;
+package it.albertus.hibernate.model.relationship;
 
 import java.util.Date;
 import java.util.HashSet;

@@ -1,10 +1,8 @@
 package it.albertus.hibernate;
 
-import it.albertus.hibernate.model.Offerta;
-import it.albertus.hibernate.model.Oggetto;
+import it.albertus.hibernate.model.embedded.Indirizzo;
+import it.albertus.hibernate.model.embedded.Persona;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,17 +16,17 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public class HibernateBasicTest {
+public class EmbeddedTest {
 
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
 	private final EntityManager em;
 
 	public static final void main(String... args) {
-		new HibernateBasicTest().run();
+		new EmbeddedTest().run();
 	}
 
-	public HibernateBasicTest() {
+	public EmbeddedTest() {
 		System.out.println(">>> Inizio programma.");
 		em = Persistence.createEntityManagerFactory("jpa_test").createEntityManager();
 		System.out.println(">>> Inizializzazione completata." + LINE_SEPARATOR);
@@ -66,64 +64,42 @@ public class HibernateBasicTest {
 	private void cleanup() {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.createNativeQuery("DELETE FROM offerte").executeUpdate();
-		em.createQuery("DELETE FROM it.albertus.hibernate.model.Oggetto").executeUpdate();
+		em.createQuery("DELETE FROM " + Persona.class.getName()).executeUpdate();
 		tx.commit();
 	}
 
 	private void insert() {
+		Persona persona = new Persona();
+		persona.setCognome("Rossi");
+		persona.setNome("Mario");
+
+		Indirizzo indirizzo = new Indirizzo();
+		indirizzo.setVia("Via del Corso 210");
+		indirizzo.setCap("00100");
+		indirizzo.setCitta("Roma");
+
+		persona.setIndirizzo(indirizzo);
+
 		EntityTransaction tx = em.getTransaction();
-
 		tx.begin();
-		Oggetto oggetto = new Oggetto();
-		oggetto.setDescrizione("Macchina fotografica reflex Nikon F100");
-		oggetto.setDataInserimento(new Date());
-
-		Offerta offerta1 = new Offerta();
-		offerta1.setImporto(new BigDecimal(100));
-		offerta1.setOggetto(oggetto);
-
-		Offerta offerta2 = new Offerta();
-		offerta2.setImporto(new BigDecimal("145.50"));
-		offerta2.setOggetto(oggetto);
-
-		em.persist(offerta1);
-		em.persist(offerta2);
-		tx.commit();
-
-		// Inizio una seconda transazione...
-		tx.begin();
-		Oggetto oggetto2 = new Oggetto();
-		oggetto2.setDescrizione("Obiettivo Nikon 50mm F1.4");
-		oggetto2.setDataInserimento(new Date());
-
-		Offerta offerta3 = new Offerta();
-		offerta3.setImporto(new BigDecimal(500));
-
-		Offerta offerta4 = new Offerta();
-		offerta4.setImporto(new BigDecimal("550.01"));
-
-		oggetto2.addOfferta(offerta3);
-		oggetto2.addOfferta(offerta4);
-
-		em.persist(oggetto2);
+		em.persist(persona);
 		tx.commit();
 	}
 
 	private void selectJpa() {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Oggetto> criteria = builder.createQuery(Oggetto.class);
-		Root<Oggetto> root = criteria.from(Oggetto.class);
-		criteria.select(root).where(builder.equal(root.get("descrizione"), "Macchina fotografica reflex Nikon F100"));
-		List<Oggetto> results = em.createQuery(criteria).getResultList();
+		CriteriaQuery<Persona> criteria = builder.createQuery(Persona.class);
+		Root<Persona> root = criteria.from(Persona.class);
+		criteria.select(root).where(builder.equal(root.get("cognome"), "Rossi"));
+		List<Persona> results = em.createQuery(criteria).getResultList();
 		System.out.println(results);
 	}
 
 	private void selectHibernate() {
 		Session session = em.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Oggetto.class);
-		criteria.add(Restrictions.like("descrizione", "Obiettivo%"));
-		List<Oggetto> results = criteria.list();
+		Criteria criteria = session.createCriteria(Persona.class);
+		criteria.add(Restrictions.like("indirizzo.via", "%Corso%"));
+		List<Persona> results = criteria.list();
 		System.out.println(results);
 	}
 
