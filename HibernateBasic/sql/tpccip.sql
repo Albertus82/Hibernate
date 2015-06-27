@@ -27,6 +27,8 @@ CREATE TABLE tpccip_conti_correnti
 (
     id_conto_corrente   NUMBER (20, 0) NOT NULL,
     iban                VARCHAR2 (40 CHAR) NOT NULL,
+    proprietario        VARCHAR2 (100 CHAR) NOT NULL
+)
 /
 
 ALTER TABLE tpccip_conti_correnti
