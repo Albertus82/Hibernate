@@ -37,7 +37,7 @@ USING INDEX
 /
 
 
-CREATE TABLE utenti
+CREATE TABLE tpccip_utenti
 (
     username              VARCHAR2 (50 CHAR),
     password              VARCHAR2 (50 CHAR),
@@ -49,23 +49,23 @@ CREATE TABLE utenti
 )
 /
 
-ALTER TABLE utenti
-ADD CONSTRAINT nn_utenti_password CHECK ("PASSWORD" IS NOT NULL)
+ALTER TABLE tpccip_utenti
+ADD CONSTRAINT nn_tpccip_utenti_password CHECK ("PASSWORD" IS NOT NULL)
 /
 
-ALTER TABLE utenti
-ADD CONSTRAINT nn_utenti_nome CHECK ("NOME" IS NOT NULL)
+ALTER TABLE tpccip_utenti
+ADD CONSTRAINT nn_tpccip_utenti_nome CHECK ("NOME" IS NOT NULL)
 /
 
-ALTER TABLE utenti
-ADD CONSTRAINT nn_utenti_cognome CHECK ("COGNOME" IS NOT NULL)
+ALTER TABLE tpccip_utenti
+ADD CONSTRAINT nn_tpccip_utenti_cognome CHECK ("COGNOME" IS NOT NULL)
 /
 
-ALTER TABLE utenti
-ADD CONSTRAINT nn_utenti_data_inserimento CHECK ("DATA_INSERIMENTO" IS NOT NULL)
+ALTER TABLE tpccip_utenti
+ADD CONSTRAINT nn_tpccip_utenti_data_inserim CHECK ("DATA_INSERIMENTO" IS NOT NULL)
 /
 
-ALTER TABLE utenti
-ADD CONSTRAINT pk_utenti PRIMARY KEY (username)
+ALTER TABLE tpccip_utenti
+ADD CONSTRAINT pk_tpccip_utenti PRIMARY KEY (username)
 USING INDEX
 /

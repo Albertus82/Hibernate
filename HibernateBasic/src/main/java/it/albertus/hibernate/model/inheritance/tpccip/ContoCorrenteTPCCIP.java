@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TPCCIP_CONTI_CORRENTI")
-public class ContoCorrente extends MetodoPagamento {
+public class ContoCorrenteTPCCIP extends MetodoPagamentoTPCCIP {
 
 	@Id
 	@SequenceGenerator(name = "seq_conti_correnti", sequenceName = "SEQ_CONTI_CORRENTI")

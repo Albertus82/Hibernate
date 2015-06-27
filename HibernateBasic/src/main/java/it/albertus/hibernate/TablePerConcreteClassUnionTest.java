@@ -1,8 +1,8 @@
 package it.albertus.hibernate;
 
-import it.albertus.hibernate.model.inheritance.tpccip.CartaDiCreditoTPCCIP;
-import it.albertus.hibernate.model.inheritance.tpccip.ContoCorrenteTPCCIP;
-import it.albertus.hibernate.model.inheritance.tpccip.UtenteTPCCIP;
+import it.albertus.hibernate.model.inheritance.tpccu.CartaDiCreditoTPCCU;
+import it.albertus.hibernate.model.inheritance.tpccu.ContoCorrenteTPCCU;
+import it.albertus.hibernate.model.inheritance.tpccu.UtenteTPCCU;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -19,7 +19,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public class TablePerConcreteClassImplicitPolymorphismTest {
+public class TablePerConcreteClassUnionTest {
 
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 	private static final String SPACER = LINE_SEPARATOR + LINE_SEPARATOR;
@@ -27,10 +27,10 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 	private final EntityManager em;
 
 	public static final void main(String... args) {
-		new TablePerConcreteClassImplicitPolymorphismTest().run();
+		new TablePerConcreteClassUnionTest().run();
 	}
 
-	public TablePerConcreteClassImplicitPolymorphismTest() {
+	public TablePerConcreteClassUnionTest() {
 		System.out.println(">>> Inizio programma " + this.getClass().getSimpleName() + '.');
 		em = Persistence.createEntityManagerFactory("jpa_test").createEntityManager();
 		System.out.println(">>> Inizializzazione completata." + SPACER);
@@ -43,7 +43,7 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 
 		// Esempio...
 		System.out.println(">>> Inizio esempio INSERT...");
-		UtenteTPCCIP utente = insert();
+		UtenteTPCCU utente = insert();
 		System.out.println(">>> Fine esempio INSERT." + SPACER);
 
 		System.out.println(">>> Inizio esempio UPDATE...");
@@ -61,7 +61,7 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 		em.clear();
 
 		System.out.println(">>> Inizio esempio SELECT con Hibernate...");
-		List<UtenteTPCCIP> utenti = selectHibernate();
+		List<UtenteTPCCU> utenti = selectHibernate();
 		System.out.println(">>> Fine esempio SELECT con Hibernate." + SPACER);
 
 		System.out.println(">>> Inizio esempio DELETE con JPA...");
@@ -80,39 +80,56 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 	private void cleanup() {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.createNativeQuery("DELETE FROM tpccip_carte_di_credito").executeUpdate();
-		em.createQuery("DELETE FROM " + ContoCorrenteTPCCIP.class.getName()).executeUpdate();
-		em.createQuery("DELETE FROM " + UtenteTPCCIP.class.getName()).executeUpdate();
+		em.createNativeQuery("DELETE FROM tpccu_carte_di_credito").executeUpdate();
+		em.createQuery("DELETE FROM " + ContoCorrenteTPCCU.class.getName()).executeUpdate();
+		em.createQuery("DELETE FROM " + UtenteTPCCU.class.getName()).executeUpdate();
 
 		tx.commit();
 	}
 
-	private UtenteTPCCIP insert() {
-		UtenteTPCCIP utente = new UtenteTPCCIP();
-		utente.setUsername("a");
-		utente.setPassword("a");
-		utente.setCognome("Bianchi");
-		utente.setNome("Mario");
+	private UtenteTPCCU insert() {
+		UtenteTPCCU utente1 = new UtenteTPCCU();
+		utente1.setUsername("b");
+		utente1.setPassword("b");
+		utente1.setCognome("Bianchi");
+		utente1.setNome("Mario");
 		Calendar dataNascita = Calendar.getInstance();
 		dataNascita.add(Calendar.YEAR, -30);
-		utente.setDataNascita(dataNascita.getTime());
+		utente1.setDataNascita(dataNascita.getTime());
 
-		CartaDiCreditoTPCCIP carta = new CartaDiCreditoTPCCIP();
-		carta.setNumero("1234567890123456");
+		CartaDiCreditoTPCCU carta = new CartaDiCreditoTPCCU();
+		carta.setNumero("9999555588883333");
 		carta.setProprietario("Mario Rossi");
 		Calendar dataScadenza = Calendar.getInstance();
 		dataScadenza.add(Calendar.YEAR, 2);
 		carta.setScadenza(dataScadenza.getTime());
-		utente.setCartaDiCredito(carta);
+		utente1.setMetodoPagamento(carta);
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.persist(utente);
+		em.persist(utente1);
 		tx.commit();
-		return utente;
+		
+		UtenteTPCCU utente2 = new UtenteTPCCU();
+		utente2.setUsername("a");
+		utente2.setPassword("a");
+		utente2.setCognome("Verdi");
+		utente2.setNome("Giorgio");
+		utente2.setDataNascita(dataNascita.getTime());
+
+		ContoCorrenteTPCCU conto = new ContoCorrenteTPCCU();
+		conto.setIban("IT35123451234500001234567890");
+		conto.setProprietario("Giorgio Verdi");
+		utente2.setMetodoPagamento(carta);
+		
+		tx.begin();
+		em.persist(utente2);
+		tx.commit();
+		
+		return utente1;
 	}
 
-	private UtenteTPCCIP update(UtenteTPCCIP utente) {
+	private UtenteTPCCU update(UtenteTPCCU utente) {
 		utente.setCognome("Rossi");
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -123,24 +140,24 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 
 	private void selectJpa() {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<UtenteTPCCIP> criteria = builder.createQuery(UtenteTPCCIP.class);
-		Root<UtenteTPCCIP> root = criteria.from(UtenteTPCCIP.class);
+		CriteriaQuery<UtenteTPCCU> criteria = builder.createQuery(UtenteTPCCU.class);
+		Root<UtenteTPCCU> root = criteria.from(UtenteTPCCU.class);
 		criteria.select(root).where(builder.equal(root.get("cognome"), "Rossi"));
-		List<UtenteTPCCIP> results = em.createQuery(criteria).getResultList();
+		List<UtenteTPCCU> results = em.createQuery(criteria).getResultList();
 		System.out.println(results);
 	}
 
-	private List<UtenteTPCCIP> selectHibernate() {
+	private List<UtenteTPCCU> selectHibernate() {
 		Session session = em.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(UtenteTPCCIP.class);
-		criteria.createAlias("cartaDiCredito", "cdc");
-		criteria.add(Restrictions.like("cdc.numero", "12345678%"));
-		List<UtenteTPCCIP> results = criteria.list();
+		Criteria criteria = session.createCriteria(UtenteTPCCU.class);
+		criteria.createAlias("metodoPagamento", "cdc");
+		criteria.add(Restrictions.like("cdc.numero", "%"));
+		List<UtenteTPCCU> results = criteria.list();
 		System.out.println(results);
 		return results;
 	}
 
-	private void deleteJpa(Collection<UtenteTPCCIP> utenti) {
+	private void deleteJpa(Collection<UtenteTPCCU> utenti) {
 		if (utenti != null && !utenti.isEmpty()) {
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();

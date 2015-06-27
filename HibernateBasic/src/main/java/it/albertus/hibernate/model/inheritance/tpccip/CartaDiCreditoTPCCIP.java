@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TPCCIP_CARTE_DI_CREDITO")
-public class CartaDiCredito extends MetodoPagamento {
+public class CartaDiCreditoTPCCIP extends MetodoPagamentoTPCCIP {
 
 	@Id
 	@SequenceGenerator(name = "seq_carte_di_credito", sequenceName = "SEQ_CARTE_DI_CREDITO")

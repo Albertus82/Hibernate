@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class MetodoPagamento {
+public abstract class MetodoPagamentoTPCCIP {
 
 	@Column(nullable = false)
 	protected String proprietario;

@@ -1,6 +1,4 @@
-package it.albertus.hibernate.model.inheritance;
-
-import it.albertus.hibernate.model.inheritance.tpccip.CartaDiCredito;
+package it.albertus.hibernate.model.inheritance.tpccu;
 
 import java.util.Date;
 
@@ -13,8 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "UTENTI")
-public class Utente {
+@Table(name = "TPCCU_UTENTI")
+public class UtenteTPCCU {
 
 	@Id
 	private String username;
@@ -27,7 +25,7 @@ public class Utente {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_METODO_PAGAMENTO")
-	private CartaDiCredito cartaDiCredito;
+	private MetodoPagamentoTPCCU metodoPagamento;
 
 	public String getUsername() {
 		return username;
@@ -69,18 +67,18 @@ public class Utente {
 		this.dataNascita = dataNascita;
 	}
 
-	public CartaDiCredito getCartaDiCredito() {
-		return cartaDiCredito;
+	public MetodoPagamentoTPCCU getMetodoPagamento() {
+		return metodoPagamento;
 	}
 
-	public void setCartaDiCredito(CartaDiCredito cartaDiCredito) {
-		this.cartaDiCredito = cartaDiCredito;
+	public void setMetodoPagamento(MetodoPagamentoTPCCU metodoPagamento) {
+		this.metodoPagamento = metodoPagamento;
 	}
 
 	public String toString() {
-		return "username=" + username + ", cognome=" + cognome + ", nome=" + nome + ", dataNascita="
-				+ (dataNascita != null ? dataNascita : "null") + ", cartaDiCredito="
-				+ (cartaDiCredito != null ? "{" + cartaDiCredito + "}" : "null");
+		return "username=" + username + ", cognome=" + cognome + ", nome=" + nome + ", dataNascita=" 
+				+ (dataNascita != null ? dataNascita : "null") + ", metodoPagamento="
+				+ (metodoPagamento != null ? "{" + metodoPagamento + "}" : "null");
 	}
 
 }
