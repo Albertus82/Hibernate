@@ -21,6 +21,7 @@ import org.hibernate.criterion.Restrictions;
 public class RelationshipTest {
 
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+	private static final String SPACER = LINE_SEPARATOR + LINE_SEPARATOR;
 
 	private final EntityManager em;
 
@@ -31,32 +32,32 @@ public class RelationshipTest {
 	public RelationshipTest() {
 		System.out.println(">>> Inizio programma " + this.getClass().getSimpleName() + '.');
 		em = Persistence.createEntityManagerFactory("jpa_test").createEntityManager();
-		System.out.println(">>> Inizializzazione completata." + LINE_SEPARATOR);
+		System.out.println(">>> Inizializzazione completata." + SPACER);
 	}
 
 	private void run() {
 		System.out.println(">>> Inizio pulizia database...");
 		cleanup();
-		System.out.println(">>> Database ripulito." + LINE_SEPARATOR);
+		System.out.println(">>> Database ripulito." + SPACER);
 
 		// Esempio...
 		System.out.println(">>> Inizio esempio INSERT...");
 		insert();
-		System.out.println(">>> Fine esempio INSERT." + LINE_SEPARATOR);
+		System.out.println(">>> Fine esempio INSERT." + SPACER);
 
 		// Detach di tutti gli oggetti, per forzare le successive select
 		em.clear();
 
 		System.out.println(">>> Inizio esempio SELECT con JPA...");
 		selectJpa();
-		System.out.println(">>> Fine esempio SELECT con JPA." + LINE_SEPARATOR);
+		System.out.println(">>> Fine esempio SELECT con JPA." + SPACER);
 
 		// Detach di tutti gli oggetti, per forzare le successive select
 		em.clear();
 
 		System.out.println(">>> Inizio esempio SELECT con Hibernate...");
 		selectHibernate();
-		System.out.println(">>> Fine esempio SELECT con Hibernate." + LINE_SEPARATOR);
+		System.out.println(">>> Fine esempio SELECT con Hibernate." + SPACER);
 
 		em.close();
 

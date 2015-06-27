@@ -22,6 +22,7 @@ import org.hibernate.criterion.Restrictions;
 public class TablePerConcreteClassImplicitPolymorphismTest {
 
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+	private static final String SPACER = LINE_SEPARATOR + LINE_SEPARATOR;
 
 	private final EntityManager em;
 
@@ -32,41 +33,45 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 	public TablePerConcreteClassImplicitPolymorphismTest() {
 		System.out.println(">>> Inizio programma " + this.getClass().getSimpleName() + '.');
 		em = Persistence.createEntityManagerFactory("jpa_test").createEntityManager();
-		System.out.println(">>> Inizializzazione completata." + LINE_SEPARATOR);
+		System.out.println(">>> Inizializzazione completata." + SPACER);
 	}
 
 	private void run() {
 		System.out.println(">>> Inizio pulizia database...");
 		cleanup();
-		System.out.println(">>> Database ripulito." + LINE_SEPARATOR);
+		System.out.println(">>> Database ripulito." + SPACER);
 
 		// Esempio...
 		System.out.println(">>> Inizio esempio INSERT...");
-		insert();
-		System.out.println(">>> Fine esempio INSERT." + LINE_SEPARATOR);
+		Utente utente = insert();
+		System.out.println(">>> Fine esempio INSERT." + SPACER);
+
+		System.out.println(">>> Inizio esempio UPDATE...");
+		utente = update(utente);
+		System.out.println(">>> Fine esempio UPDATE." + SPACER);
 
 		// Detach di tutti gli oggetti, per forzare le successive select
 		em.clear();
 
 		System.out.println(">>> Inizio esempio SELECT con JPA...");
 		selectJpa();
-		System.out.println(">>> Fine esempio SELECT con JPA." + LINE_SEPARATOR);
+		System.out.println(">>> Fine esempio SELECT con JPA." + SPACER);
 
 		// Detach di tutti gli oggetti, per forzare le successive select
 		em.clear();
 
 		System.out.println(">>> Inizio esempio SELECT con Hibernate...");
 		List<Utente> utenti = selectHibernate();
-		System.out.println(">>> Fine esempio SELECT con Hibernate." + LINE_SEPARATOR);
+		System.out.println(">>> Fine esempio SELECT con Hibernate." + SPACER);
 
 		System.out.println(">>> Inizio esempio DELETE con JPA...");
 		deleteJpa(utenti);
-		System.out.println(">>> Fine esempio DELETE con JPA." + LINE_SEPARATOR);
-		
+		System.out.println(">>> Fine esempio DELETE con JPA." + SPACER);
+
 		System.out.println(">>> Inizio secondo esempio SELECT con JPA...");
 		selectJpa();
-		System.out.println(">>> Fine secondo esempio SELECT con JPA." + LINE_SEPARATOR);
-		
+		System.out.println(">>> Fine secondo esempio SELECT con JPA." + SPACER);
+
 		em.close();
 
 		System.out.println(">>> Fine programma " + this.getClass().getSimpleName() + '.');
@@ -82,11 +87,11 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 		tx.commit();
 	}
 
-	private void insert() {
+	private Utente insert() {
 		Utente utente = new Utente();
 		utente.setUsername("a");
 		utente.setPassword("a");
-		utente.setCognome("Rossi");
+		utente.setCognome("Bianchi");
 		utente.setNome("Mario");
 		Calendar dataNascita = Calendar.getInstance();
 		dataNascita.add(Calendar.YEAR, -30);
@@ -104,6 +109,16 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 		tx.begin();
 		em.persist(utente);
 		tx.commit();
+		return utente;
+	}
+
+	private Utente update(Utente utente) {
+		utente.setCognome("Rossi");
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		utente = em.merge(utente);
+		tx.commit();
+		return utente;
 	}
 
 	private void selectJpa() {
@@ -124,7 +139,7 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 		System.out.println(results);
 		return results;
 	}
-	
+
 	private void deleteJpa(Collection<Utente> utenti) {
 		if (utenti != null && !utenti.isEmpty()) {
 			EntityTransaction tx = em.getTransaction();

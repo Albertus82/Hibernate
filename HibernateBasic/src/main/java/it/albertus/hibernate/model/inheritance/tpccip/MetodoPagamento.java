@@ -6,7 +6,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class MetodoPagamento {
 
-	@Column(name = "PROPRIETARIO", nullable = false) // Obbligatoria!
+	@Column(nullable = false)
 	protected String proprietario;
 
 	public String getProprietario() {
