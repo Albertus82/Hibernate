@@ -1,5 +1,6 @@
 package it.albertus.hibernate.model.embedded;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -7,6 +8,8 @@ public class Indirizzo {
 
 	private String via;
 	private String citta;
+
+	@Column(name = "CODICE_AVVIAMENTO_POSTALE")
 	private String cap;
 
 	public String getVia() {
@@ -36,4 +39,5 @@ public class Indirizzo {
 	public String toString() {
 		return "via=" + via + ", cap=" + cap + ", citt\u00E0=" + citta;
 	}
+
 }

@@ -27,7 +27,7 @@ public class EmbeddedTest {
 	}
 
 	public EmbeddedTest() {
-		System.out.println(">>> Inizio programma.");
+		System.out.println(">>> Inizio programma " + this.getClass().getSimpleName() + '.');
 		em = Persistence.createEntityManagerFactory("jpa_test").createEntityManager();
 		System.out.println(">>> Inizializzazione completata." + LINE_SEPARATOR);
 	}
@@ -58,7 +58,7 @@ public class EmbeddedTest {
 
 		em.close();
 
-		System.out.println(">>> Fine programma.");
+		System.out.println(">>> Fine programma " + this.getClass().getSimpleName() + '.');
 	}
 
 	private void cleanup() {
