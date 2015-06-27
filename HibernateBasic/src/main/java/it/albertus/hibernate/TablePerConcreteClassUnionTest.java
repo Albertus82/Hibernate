@@ -120,7 +120,7 @@ public class TablePerConcreteClassUnionTest {
 		ContoCorrenteTPCCU conto = new ContoCorrenteTPCCU();
 		conto.setIban("IT35123451234500001234567890");
 		conto.setProprietario("Giorgio Verdi");
-		utente2.setMetodoPagamento(carta);
+		utente2.setMetodoPagamento(conto);
 		
 		tx.begin();
 		em.persist(utente2);
