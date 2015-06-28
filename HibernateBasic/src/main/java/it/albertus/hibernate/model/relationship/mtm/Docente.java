@@ -1,6 +1,7 @@
 package it.albertus.hibernate.model.relationship.mtm;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,11 +29,16 @@ public class Docente {
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
-		name = "DOCENTI_MATERIE", 
-		joinColumns = { @JoinColumn(name = "ID_DOCENTE") }, 
+		name = "DOCENTI_MATERIE",
+		joinColumns = { @JoinColumn(name = "ID_DOCENTE") },
 		inverseJoinColumns = { @JoinColumn(name = "ID_MATERIA") }
 	)
-	private List<Materia> materie;
+	private Set<Materia> materie = new HashSet<Materia>();
+
+	public void addMateria(Materia materia) {
+		materie.add(materia);
+		materia.getDocenti().add(this);
+	}
 
 	public Long getId() {
 		return id;
@@ -58,11 +64,11 @@ public class Docente {
 		this.nome = nome;
 	}
 
-	public List<Materia> getMaterie() {
+	public Set<Materia> getMaterie() {
 		return materie;
 	}
 
-	public void setMaterie(List<Materia> materie) {
+	public void setMaterie(Set<Materia> materie) {
 		this.materie = materie;
 	}
 

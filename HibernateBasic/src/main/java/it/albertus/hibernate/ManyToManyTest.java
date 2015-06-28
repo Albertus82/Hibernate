@@ -3,8 +3,9 @@ package it.albertus.hibernate;
 import it.albertus.hibernate.model.relationship.mtm.Docente;
 import it.albertus.hibernate.model.relationship.mtm.Materia;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -47,13 +48,6 @@ public class ManyToManyTest {
 		selectJpa();
 		System.out.println(">>> Fine esempio SELECT con JPA." + SPACER);
 
-		// Detach di tutti gli oggetti, per forzare le successive select
-		em.clear();
-
-		System.out.println(">>> Inizio esempio SELECT con Hibernate...");
-//		selectHibernate();
-		System.out.println(">>> Fine esempio SELECT con Hibernate." + SPACER);
-
 		em.close();
 
 		System.out.println(">>> Fine programma " + this.getClass().getSimpleName() + '.');
@@ -70,11 +64,10 @@ public class ManyToManyTest {
 	}
 
 	private void insert() {
-
 		Docente docente1 = new Docente();
 		docente1.setCognome("Bianchi");
 		docente1.setNome("Mario");
-		List<Materia> materie1 = new ArrayList<Materia>();
+		Set<Materia> materie1 = new HashSet<Materia>();
 		materie1.add(new Materia("Italiano"));
 		materie1.add(new Materia("Latino"));
 		materie1.add(new Materia("Geografia"));
@@ -86,19 +79,21 @@ public class ManyToManyTest {
 		em.persist(docente1);
 		tx.commit();
 		System.out.println("> Primo docente inserito." + LINE_SEPARATOR);
-		
+
 		// Inizio una seconda transazione...
+		Materia materia1 = new Materia("Storia");
+		Materia materia2 = new Materia("Filosofia");
 		Docente docente2 = new Docente();
 		docente2.setCognome("Neri");
 		docente2.setNome("Vittorio");
-		List<Materia> materie2 = new ArrayList<Materia>();
-		materie2.add(new Materia("Storia"));
-		materie2.add(new Materia("Filosofia"));
-		docente2.setMaterie(materie2);
-		
+		materia1.addDocente(docente2);
+		materia2.addDocente(docente2);
+
 		tx.begin();
-		em.persist(docente2);
+		em.persist(materia1);
+		em.persist(materia2);
 		tx.commit();
+		System.out.println("> Due materie con docente inserite (relazione inversa)." + LINE_SEPARATOR);
 	}
 
 	private List<Docente> selectJpa() {
@@ -110,13 +105,5 @@ public class ManyToManyTest {
 		System.out.println(results);
 		return results;
 	}
-//
-//	private void selectHibernate() {
-//		Session session = em.unwrap(Session.class);
-//		Criteria criteria = session.createCriteria(Oggetto.class);
-//		criteria.add(Restrictions.like("descrizione", "Obiettivo%"));
-//		List<?> results = criteria.list();
-//		System.out.println(results);
-//	}
 
 }
