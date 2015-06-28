@@ -24,7 +24,7 @@ USING INDEX
 CREATE TABLE tpch_tipi_metodo_pagamento
 (
     id_tipo_metodo_pagamento   NUMBER (2, 0) NOT NULL,
-    descrizione                VARCHAR2 (50 BYTE) NOT NULL
+    descrizione                VARCHAR2 (50 CHAR) NOT NULL
 )
 /
 
