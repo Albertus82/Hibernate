@@ -31,6 +31,7 @@ public class CartaDiCreditoTPCCU extends MetodoPagamentoTPCCU {
 		this.scadenza = scadenza;
 	}
 
+	@Override
 	public String toString() {
 		return "id=" + id + ", numero=" + numero + ", scadenza=" + scadenza + ", proprietario=" + proprietario;
 	}

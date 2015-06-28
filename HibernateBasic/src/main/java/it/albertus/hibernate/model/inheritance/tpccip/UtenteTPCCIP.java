@@ -75,6 +75,7 @@ public class UtenteTPCCIP {
 		this.cartaDiCredito = cartaDiCredito;
 	}
 
+	@Override
 	public String toString() {
 		return "username=" + username + ", cognome=" + cognome + ", nome=" + nome + ", dataNascita="
 				+ (dataNascita != null ? dataNascita : "null") + ", cartaDiCredito="

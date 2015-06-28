@@ -48,6 +48,7 @@ public class CartaDiCreditoTPCCIP extends MetodoPagamentoTPCCIP {
 		this.scadenza = scadenza;
 	}
 
+	@Override
 	public String toString() {
 		return "id=" + id + ", numero=" + numero + ", scadenza=" + scadenza + ", proprietario=" + proprietario;
 	}

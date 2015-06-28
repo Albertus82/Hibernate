@@ -87,6 +87,7 @@ public class UtenteTPCCU {
 		this.metodoPagamento = metodoPagamento;
 	}
 
+	@Override
 	public String toString() {
 		return "username=" + username + ", cognome=" + cognome + ", nome=" + nome + ", dataNascita=" + (dataNascita != null ? dataNascita : "null") + ", metodoPagamento="
 				+ (metodoPagamento != null ? "{" + metodoPagamento + "}" : "null") + ", dataInserimento=" + (dataInserimento != null ? dataInserimento : "null");
