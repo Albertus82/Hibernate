@@ -2,6 +2,7 @@ package it.albertus.hibernate;
 
 import it.albertus.hibernate.model.inheritance.tpccip.CartaDiCreditoTPCCIP;
 import it.albertus.hibernate.model.inheritance.tpccip.ContoCorrenteTPCCIP;
+import it.albertus.hibernate.model.inheritance.tpccip.MetodoPagamentoTPCCIP;
 import it.albertus.hibernate.model.inheritance.tpccip.UtenteTPCCIP;
 
 import java.util.Calendar;
@@ -72,6 +73,10 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 		selectJpa();
 		System.out.println(">>> Fine secondo esempio SELECT con JPA." + SPACER);
 
+		System.out.println(">>> Inizio esempio SELECT POLIMORFICA con Hibernate...");
+		selectPolimorficaHibernate();
+		System.out.println(">>> Fine esempio SELECT POLIMORFICA con Hibernate." + SPACER);
+
 		em.close();
 
 		System.out.println(">>> Fine programma " + this.getClass().getSimpleName() + '.');
@@ -136,6 +141,15 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 		criteria.createAlias("cartaDiCredito", "cdc");
 		criteria.add(Restrictions.like("cdc.numero", "12345678%"));
 		List<UtenteTPCCIP> results = criteria.list();
+		System.out.println(results);
+		return results;
+	}
+
+	private List<MetodoPagamentoTPCCIP> selectPolimorficaHibernate() {
+		Session session = em.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(MetodoPagamentoTPCCIP.class);
+		criteria.add(Restrictions.like("proprietario", "Mario%"));
+		List<MetodoPagamentoTPCCIP> results = criteria.list();
 		System.out.println(results);
 		return results;
 	}
