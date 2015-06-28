@@ -16,9 +16,13 @@ public class UtenteTPCCU {
 
 	@Id
 	private String username;
+
 	private String password;
 	private String cognome;
 	private String nome;
+
+	@Column(name = "DATA_INSERIMENTO", insertable = false, updatable = false)
+	private Date dataInserimento;
 
 	@Column(name = "DATA_NASCITA")
 	private Date dataNascita;
@@ -59,6 +63,14 @@ public class UtenteTPCCU {
 		this.nome = nome;
 	}
 
+	public Date getDataInserimento() {
+		return dataInserimento;
+	}
+
+	public void setDataInserimento(Date dataInserimento) {
+		this.dataInserimento = dataInserimento;
+	}
+
 	public Date getDataNascita() {
 		return dataNascita;
 	}
@@ -76,9 +88,8 @@ public class UtenteTPCCU {
 	}
 
 	public String toString() {
-		return "username=" + username + ", cognome=" + cognome + ", nome=" + nome + ", dataNascita=" 
-				+ (dataNascita != null ? dataNascita : "null") + ", metodoPagamento="
-				+ (metodoPagamento != null ? "{" + metodoPagamento + "}" : "null");
+		return "username=" + username + ", cognome=" + cognome + ", nome=" + nome + ", dataNascita=" + (dataNascita != null ? dataNascita : "null") + ", metodoPagamento="
+				+ (metodoPagamento != null ? "{" + metodoPagamento + "}" : "null") + ", dataInserimento=" + (dataInserimento != null ? dataInserimento : "null");
 	}
 
 }
