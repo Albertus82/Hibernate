@@ -7,7 +7,7 @@ CREATE TABLE docenti
 (
     id_docente         NUMBER (20, 0) NOT NULL,
     cognome            VARCHAR2 (50 CHAR) NOT NULL,
-    nome               VARCHAR2 (50 CHAR),
+    nome               VARCHAR2 (50 CHAR) NOT NULL,
     data_inserimento   DATE DEFAULT SYSDATE NOT NULL
 )
 /
