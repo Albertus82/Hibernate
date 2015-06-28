@@ -1,3 +1,6 @@
+CREATE OR REPLACE PUBLIC SYNONYM tpccu_utenti FOR utenti;
+
+
 CREATE SEQUENCE seq_metodo_pagamento;
 
 
@@ -30,23 +33,5 @@ CREATE TABLE tpccu_conti_correnti
 
 ALTER TABLE tpccu_conti_correnti
 ADD CONSTRAINT pk_tpccu_conti_correnti PRIMARY KEY (id_metodo_pagamento)
-USING INDEX
-/
-
-
-CREATE TABLE tpccu_utenti
-(
-    username              VARCHAR2 (50 CHAR) NOT NULL,
-    password              VARCHAR2 (50 CHAR) NOT NULL,
-    nome                  VARCHAR2 (50 CHAR) NOT NULL,
-    cognome               VARCHAR2 (50 CHAR) NOT NULL,
-    data_nascita          DATE,
-    data_inserimento      TIMESTAMP (3) DEFAULT SYSTIMESTAMP NOT NULL,
-    id_metodo_pagamento   NUMBER (20, 0)
-)
-/
-
-ALTER TABLE tpccu_utenti
-ADD CONSTRAINT pk_tpccu_utenti PRIMARY KEY (username)
 USING INDEX
 /

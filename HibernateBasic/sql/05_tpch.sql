@@ -1,19 +1,4 @@
-CREATE TABLE tpch_utenti
-(
-    username              VARCHAR2 (50 CHAR) NOT NULL,
-    password              VARCHAR2 (50 CHAR) NOT NULL,
-    nome                  VARCHAR2 (50 CHAR) NOT NULL,
-    cognome               VARCHAR2 (50 CHAR) NOT NULL,
-    data_nascita          DATE,
-    data_inserimento      TIMESTAMP (3) DEFAULT SYSTIMESTAMP NOT NULL,
-    id_metodo_pagamento   NUMBER (20, 0)
-)
-/
-
-ALTER TABLE tpch_utenti
-ADD CONSTRAINT pk_tpch_utenti PRIMARY KEY (username)
-USING INDEX
-/
+CREATE OR REPLACE PUBLIC SYNONYM tpch_utenti FOR utenti;
 
 
 CREATE TABLE tpch_metodi_pagamento
@@ -60,3 +45,5 @@ VALUES (1, 'Conto corrente');
 INSERT
   INTO tpch_tipi_metodo_pagamento (id_tipo_metodo_pagamento, descrizione)
 VALUES (2, 'Carta di credito');
+
+COMMIT WORK;

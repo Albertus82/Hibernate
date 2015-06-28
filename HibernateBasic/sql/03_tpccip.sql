@@ -1,3 +1,23 @@
+CREATE TABLE utenti
+(
+    username              VARCHAR2 (50 CHAR) NOT NULL,
+    password              VARCHAR2 (50 CHAR) NOT NULL,
+    nome                  VARCHAR2 (50 CHAR) NOT NULL,
+    cognome               VARCHAR2 (50 CHAR) NOT NULL,
+    data_nascita          DATE,
+    data_inserimento      TIMESTAMP (3) DEFAULT SYSTIMESTAMP NOT NULL,
+    id_metodo_pagamento   NUMBER (20, 0)
+)
+/
+
+ALTER TABLE utenti
+ADD CONSTRAINT pk_utenti PRIMARY KEY (username)
+USING INDEX
+/
+
+CREATE OR REPLACE PUBLIC SYNONYM tpccip_utenti FOR utenti;
+
+
 CREATE SEQUENCE seq_carte_di_credito;
 
 CREATE SEQUENCE seq_conti_correnti;
@@ -32,23 +52,5 @@ CREATE TABLE tpccip_conti_correnti
 
 ALTER TABLE tpccip_conti_correnti
 ADD CONSTRAINT pk_tpccip_conti_correnti PRIMARY KEY (id_conto_corrente)
-USING INDEX
-/
-
-
-CREATE TABLE tpccip_utenti
-(
-    username              VARCHAR2 (50 CHAR) NOT NULL,
-    password              VARCHAR2 (50 CHAR) NOT NULL,
-    nome                  VARCHAR2 (50 CHAR) NOT NULL,
-    cognome               VARCHAR2 (50 CHAR) NOT NULL,
-    data_nascita          DATE,
-    data_inserimento      TIMESTAMP (3) DEFAULT SYSTIMESTAMP NOT NULL,
-    id_metodo_pagamento   NUMBER (20, 0)
-)
-/
-
-ALTER TABLE tpccip_utenti
-ADD CONSTRAINT pk_tpccip_utenti PRIMARY KEY (username)
 USING INDEX
 /
