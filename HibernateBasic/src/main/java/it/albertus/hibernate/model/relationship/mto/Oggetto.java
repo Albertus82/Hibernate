@@ -1,8 +1,8 @@
 package it.albertus.hibernate.model.relationship.mto;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,15 +18,20 @@ import javax.persistence.Table;
 @Table(name = "OGGETTI")
 public class Oggetto {
 
-	private Long id;
-	private String descrizione;
-	private Date dataInserimento;
-	private Set<Offerta> offerte = new HashSet<Offerta>();
-
 	@Id
 	@SequenceGenerator(name = "seq_oggetti", sequenceName = "SEQ_OGGETTI")
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_oggetti")
 	@Column(name = "ID_OGGETTO")
+	private Long id;
+
+	private String descrizione;
+
+	@Column(name = "DATA_INSERIMENTO")
+	private Date dataInserimento;
+
+	@OneToMany(mappedBy = "oggetto", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+	private List<Offerta> offerte = new ArrayList<Offerta>();
+
 	public Long getId() {
 		return id;
 	}
@@ -35,7 +40,6 @@ public class Oggetto {
 		this.id = id;
 	}
 
-	@Column(name = "DESCRIZIONE")
 	public String getDescrizione() {
 		return descrizione;
 	}
@@ -44,7 +48,6 @@ public class Oggetto {
 		this.descrizione = descrizione;
 	}
 
-	@Column(name = "DATA_INSERIMENTO")
 	public Date getDataInserimento() {
 		return dataInserimento;
 	}
@@ -54,12 +57,11 @@ public class Oggetto {
 	}
 
 	// La relazione e' gestita dall'altro lato!
-	@OneToMany(mappedBy = "oggetto", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
-	public Set<Offerta> getOfferte() {
+	public List<Offerta> getOfferte() {
 		return offerte;
 	}
 
-	public void setOfferte(Set<Offerta> offerte) {
+	public void setOfferte(List<Offerta> offerte) {
 		this.offerte = offerte;
 	}
 

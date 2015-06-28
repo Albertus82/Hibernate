@@ -92,6 +92,7 @@ public class ManyToOneTest {
 		em.persist(offerta2);
 		tx.commit();
 
+		System.out.println("> Prima INSERT completata." + LINE_SEPARATOR);
 		// Inizio una seconda transazione...
 		tx.begin();
 		Oggetto oggetto2 = new Oggetto();

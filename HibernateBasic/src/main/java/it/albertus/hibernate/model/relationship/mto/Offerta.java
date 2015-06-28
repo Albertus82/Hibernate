@@ -17,14 +17,18 @@ import javax.persistence.Table;
 @Table(name = "OFFERTE")
 public class Offerta {
 
-	private Long id;
-	private Oggetto oggetto;
-	private BigDecimal importo;
-
 	@Id
 	@SequenceGenerator(name = "seq_offerte", sequenceName = "SEQ_OFFERTE")
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_offerte")
 	@Column(name = "ID_OFFERTA")
+	private Long id;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID_OGGETTO", nullable = false)
+	private Oggetto oggetto;
+
+	private BigDecimal importo;
+
 	public Long getId() {
 		return id;
 	}
@@ -33,8 +37,6 @@ public class Offerta {
 		this.id = id;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_OGGETTO", nullable = false)
 	public Oggetto getOggetto() {
 		return oggetto;
 	}
@@ -43,7 +45,6 @@ public class Offerta {
 		this.oggetto = oggetto;
 	}
 
-	@Column(name = "IMPORTO")
 	public BigDecimal getImporto() {
 		return importo;
 	}
