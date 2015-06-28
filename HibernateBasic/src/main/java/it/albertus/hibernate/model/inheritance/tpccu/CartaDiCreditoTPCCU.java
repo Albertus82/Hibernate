@@ -33,7 +33,7 @@ public class CartaDiCreditoTPCCU extends MetodoPagamentoTPCCU {
 
 	@Override
 	public String toString() {
-		return "id=" + id + ", numero=" + numero + ", scadenza=" + scadenza + ", proprietario=" + proprietario;
+		return "id=" + id + ", numero=" + numero + ", scadenza=" + scadenza + ", titolare=" + titolare;
 	}
 
 }

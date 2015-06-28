@@ -25,14 +25,22 @@ public abstract class MetodoPagamentoTPCH {
 	protected Long id;
 
 	@Column(nullable = false)
-	protected String proprietario;
+	protected String titolare;
 
-	public String getProprietario() {
-		return proprietario;
+	public Long getId() {
+		return id;
 	}
 
-	public void setProprietario(String proprietario) {
-		this.proprietario = proprietario;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTitolare() {
+		return titolare;
+	}
+
+	public void setTitolare(String titolare) {
+		this.titolare = titolare;
 	}
 
 }

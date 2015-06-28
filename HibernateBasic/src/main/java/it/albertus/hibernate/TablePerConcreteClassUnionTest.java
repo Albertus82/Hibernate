@@ -99,7 +99,7 @@ public class TablePerConcreteClassUnionTest {
 
 		CartaDiCreditoTPCCU carta = new CartaDiCreditoTPCCU();
 		carta.setNumero("9999555588883333");
-		carta.setProprietario("Mario Rossi");
+		carta.setTitolare("Mario Rossi");
 		Calendar dataScadenza = Calendar.getInstance();
 		dataScadenza.add(Calendar.YEAR, 2);
 		carta.setScadenza(dataScadenza.getTime());
@@ -119,7 +119,7 @@ public class TablePerConcreteClassUnionTest {
 
 		ContoCorrenteTPCCU conto = new ContoCorrenteTPCCU();
 		conto.setIban("IT35123451234500001234567890");
-		conto.setProprietario("Giorgio Verdi");
+		conto.setTitolare("Giorgio Verdi");
 		utente2.setMetodoPagamento(conto);
 		
 		tx.begin();

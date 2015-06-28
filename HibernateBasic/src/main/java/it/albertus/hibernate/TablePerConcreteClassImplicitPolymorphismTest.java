@@ -104,7 +104,7 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 
 		CartaDiCreditoTPCCIP carta = new CartaDiCreditoTPCCIP();
 		carta.setNumero("1234567890123456");
-		carta.setProprietario("Mario Rossi");
+		carta.setTitolare("Mario Rossi");
 		Calendar dataScadenza = Calendar.getInstance();
 		dataScadenza.add(Calendar.YEAR, 2);
 		carta.setScadenza(dataScadenza.getTime());
@@ -148,7 +148,7 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 	private List<MetodoPagamentoTPCCIP> selectPolimorficaHibernate() {
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(MetodoPagamentoTPCCIP.class);
-		criteria.add(Restrictions.like("proprietario", "Mario%"));
+		criteria.add(Restrictions.like("titolare", "Mario%"));
 		List<MetodoPagamentoTPCCIP> results = criteria.list();
 		System.out.println(results);
 		return results;

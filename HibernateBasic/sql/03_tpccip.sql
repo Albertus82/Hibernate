@@ -28,7 +28,7 @@ CREATE TABLE tpccip_carte_di_credito
     id_carta_di_credito   NUMBER (20, 0) NOT NULL,
     numero                VARCHAR2 (16 CHAR) NOT NULL,
     data_scadenza         DATE NOT NULL,
-    proprietario          VARCHAR2 (100 CHAR) NOT NULL
+    titolare              VARCHAR2 (100 CHAR) NOT NULL
 )
 /
 
@@ -46,7 +46,7 @@ CREATE TABLE tpccip_conti_correnti
 (
     id_conto_corrente   NUMBER (20, 0) NOT NULL,
     iban                VARCHAR2 (40 CHAR) NOT NULL,
-    proprietario        VARCHAR2 (100 CHAR) NOT NULL
+    titolare            VARCHAR2 (100 CHAR) NOT NULL
 )
 /
 

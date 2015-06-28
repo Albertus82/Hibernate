@@ -7,14 +7,14 @@ import javax.persistence.MappedSuperclass;
 public abstract class MetodoPagamentoTPCCIP {
 
 	@Column(nullable = false)
-	protected String proprietario;
+	protected String titolare;
 
-	public String getProprietario() {
-		return proprietario;
+	public String getTitolare() {
+		return titolare;
 	}
 
-	public void setProprietario(String proprietario) {
-		this.proprietario = proprietario;
+	public void setTitolare(String titolare) {
+		this.titolare = titolare;
 	}
 
 }

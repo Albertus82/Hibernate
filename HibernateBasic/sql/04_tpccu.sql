@@ -9,7 +9,7 @@ CREATE TABLE tpccu_carte_di_credito
     id_metodo_pagamento   NUMBER (20, 0) NOT NULL,
     numero                VARCHAR2 (16 CHAR) NOT NULL,
     data_scadenza         DATE NOT NULL,
-    proprietario          VARCHAR2 (100 CHAR) NOT NULL
+    titolare              VARCHAR2 (100 CHAR) NOT NULL
 )
 /
 
@@ -27,7 +27,7 @@ CREATE TABLE tpccu_conti_correnti
 (
     id_metodo_pagamento   NUMBER (20, 0) NOT NULL,
     iban                  VARCHAR2 (40 CHAR) NOT NULL,
-    proprietario          VARCHAR2 (100 CHAR) NOT NULL
+    titolare              VARCHAR2 (100 CHAR) NOT NULL
 )
 /
 

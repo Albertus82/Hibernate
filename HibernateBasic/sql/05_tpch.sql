@@ -5,11 +5,11 @@ CREATE TABLE tpch_metodi_pagamento
 (
     id_metodo_pagamento        NUMBER (20, 0) NOT NULL,
     id_tipo_metodo_pagamento   NUMBER (2, 0) NOT NULL,
-    proprietario               VARCHAR2 (100 CHAR) NOT NULL,
+    titolare                   VARCHAR2 (100 CHAR) NOT NULL,
     carta_numero               VARCHAR2 (16 CHAR),
     carta_data_scadenza        DATE,
     conto_iban                 VARCHAR2 (40 CHAR),
-    conto_nome_banca           VARCHAR2 (50 CHAR),
+    conto_nome_banca           VARCHAR2 (100 CHAR),
     data_inserimento           TIMESTAMP (3) DEFAULT SYSTIMESTAMP NOT NULL
 )
 /
