@@ -124,7 +124,7 @@ public class RelationshipTest {
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Oggetto.class);
 		criteria.add(Restrictions.like("descrizione", "Obiettivo%"));
-		List<Oggetto> results = criteria.list();
+		List<?> results = criteria.list();
 		System.out.println(results);
 	}
 

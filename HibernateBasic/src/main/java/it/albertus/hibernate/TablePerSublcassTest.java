@@ -149,6 +149,7 @@ public class TablePerSublcassTest {
 		System.out.println(results);
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<UtenteTPSC> selectHibernate() {
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(UtenteTPSC.class);

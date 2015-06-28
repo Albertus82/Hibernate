@@ -148,6 +148,7 @@ public class TablePerClassHierarchyTest {
 		System.out.println(results);
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<UtenteTPCH> selectHibernate() {
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(UtenteTPCH.class);

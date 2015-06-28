@@ -100,7 +100,7 @@ public class EmbeddedTest {
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Persona.class);
 		criteria.add(Restrictions.like("indirizzo.via", "%Corso%"));
-		List<Persona> results = criteria.list();
+		List<?> results = criteria.list();
 		System.out.println(results);
 	}
 

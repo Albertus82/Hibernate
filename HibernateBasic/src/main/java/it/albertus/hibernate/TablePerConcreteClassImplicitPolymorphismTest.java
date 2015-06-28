@@ -135,6 +135,7 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 		System.out.println(results);
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<UtenteTPCCIP> selectHibernate() {
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(UtenteTPCCIP.class);
@@ -145,6 +146,7 @@ public class TablePerConcreteClassImplicitPolymorphismTest {
 		return results;
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<MetodoPagamentoTPCCIP> selectPolimorficaHibernate() {
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(MetodoPagamentoTPCCIP.class);

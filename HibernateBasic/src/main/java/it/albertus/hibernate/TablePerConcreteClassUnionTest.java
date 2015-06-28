@@ -147,6 +147,7 @@ public class TablePerConcreteClassUnionTest {
 		System.out.println(results);
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<UtenteTPCCU> selectHibernate() {
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(UtenteTPCCU.class);
