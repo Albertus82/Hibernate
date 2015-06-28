@@ -1,7 +1,7 @@
 package it.albertus.hibernate;
 
-import it.albertus.hibernate.model.relationship.Offerta;
-import it.albertus.hibernate.model.relationship.Oggetto;
+import it.albertus.hibernate.model.relationship.mto.Offerta;
+import it.albertus.hibernate.model.relationship.mto.Oggetto;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,7 +18,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public class RelationshipTest {
+public class ManyToOneTest {
 
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 	private static final String SPACER = LINE_SEPARATOR + LINE_SEPARATOR;
@@ -26,10 +26,10 @@ public class RelationshipTest {
 	private final EntityManager em;
 
 	public static final void main(String... args) {
-		new RelationshipTest().run();
+		new ManyToOneTest().run();
 	}
 
-	public RelationshipTest() {
+	public ManyToOneTest() {
 		System.out.println(">>> Inizio programma " + this.getClass().getSimpleName() + '.');
 		em = Persistence.createEntityManagerFactory("jpa_test").createEntityManager();
 		System.out.println(">>> Inizializzazione completata." + SPACER);
