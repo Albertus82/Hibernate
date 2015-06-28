@@ -16,7 +16,7 @@ USING INDEX
 /
 
 ALTER TABLE tpccu_carte_di_credito
-ADD CONSTRAINT ck1_tpccu_carte_numero CHECK (LENGTH(numero) = 16)
+ADD CONSTRAINT ck1_tpccu_carte_numero CHECK (LENGTH (numero) = 16)
 /
 
 
