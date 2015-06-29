@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -84,6 +85,11 @@ public class Utente implements Serializable {
 
 	public void setDataNascita(Date dataNascita) {
 		this.dataNascita = dataNascita;
+	}
+	
+	@PostPersist
+	private void notifyPersist() {
+		System.out.println("Persisted " + this);
 	}
 
 }
