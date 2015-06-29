@@ -2,8 +2,6 @@ package it.albertus.spring.dao;
 
 import it.albertus.spring.model.Utente;
 
-import java.sql.Types;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,7 +9,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,14 +23,8 @@ public class UtenteDAOImpl extends BaseDAO implements UtenteDAO {
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)	// Bisogna arrivare qui con una transazione gia' attiva!
 	public void save(Utente model) {
-		String insert = "INSERT INTO utenti (username, password, nome, cognome, data_nascita) VALUES (:usn, :pwd, :nm, :cgm, :dn)";
-		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("usn", model.getUsername(), Types.VARCHAR);
-		paramMap.addValue("pwd", model.getPassword(), Types.VARCHAR);
-		paramMap.addValue("nm", model.getNome(), Types.VARCHAR);
-		paramMap.addValue("cgm", model.getCognome(), Types.VARCHAR);
-		paramMap.addValue("dn", model.getDataNascita(), Types.DATE);
-		jdbcOperations.update(insert, paramMap);
+		entityManager.persist(model);
+		System.out.println(">>> Commit non ancora effettuato!");
 	}
 
 	@Override
@@ -41,7 +32,7 @@ public class UtenteDAOImpl extends BaseDAO implements UtenteDAO {
 		Utente utente;
 
 		try {
-			Criteria crit = getEntityManager().unwrap(Session.class).createCriteria(Utente.class);
+			Criteria crit = entityManager.unwrap(Session.class).createCriteria(Utente.class);
 			crit.add(Restrictions.eq("username", username));
 			crit.add(Restrictions.eq("password", password));
 			utente = (Utente) crit.uniqueResult();

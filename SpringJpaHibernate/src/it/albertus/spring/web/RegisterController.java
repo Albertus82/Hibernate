@@ -33,6 +33,7 @@ public class RegisterController {
 	
 	@ExceptionHandler(Exception.class)
 	public String handleException(Exception e, HttpServletRequest request) {
+		e.printStackTrace();
 		return "redirect:error?page=" + this.getClass().getSimpleName();
 	}
 	
