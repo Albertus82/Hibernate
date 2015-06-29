@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Scope;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
@@ -26,7 +25,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 	})
 @EnableTransactionManagement // Abilita l'AOP per la gestione delle transazioni.
 public class RootConfig {
-	
+
 	/** Gestisce la connessione al database. */
 	@Bean
 	protected DataSource dataSource() {
@@ -37,13 +36,7 @@ public class RootConfig {
 		ds.setPassword("alb_admin");
 		return ds;
 	}
-	
-	/** Permette di effettuare facilmente operazioni sul database usando JDBC. */
-	@Bean
-	protected NamedParameterJdbcTemplate jdbcTemplate(DataSource dataSource) {
-		return new NamedParameterJdbcTemplate(dataSource);
-	}
-	
+
 	/** 
 	 * Gestisce la transazionalita' dei metodi che accedono al database.
 	 * In presenza di piu' transaction manager, bisogna specificare in
@@ -54,7 +47,7 @@ public class RootConfig {
 	protected HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
 		return new HibernateTransactionManager(sessionFactory);
 	}
-	
+
 	/** Integrazione con Hibernate */
 	@Bean
 	public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
@@ -67,5 +60,5 @@ public class RootConfig {
 		sfb.setHibernateProperties(props);
 		return sfb;
 	}
-	
+
 }
