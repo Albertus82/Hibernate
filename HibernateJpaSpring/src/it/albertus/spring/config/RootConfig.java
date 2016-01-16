@@ -62,29 +62,32 @@ public class RootConfig {
 
 	@Bean
 	public static DatabaseConfiguration configuration() throws ConfigurationException {
+		/* Estrazione parametri di connessione dal database dal persistence.xml di JPA */
 		final XMLConfiguration databaseConfig = new XMLConfiguration();
 		databaseConfig.load(WebConfig.class.getResourceAsStream("/META-INF/persistence.xml"));
 		final NodeList nodes = databaseConfig.getDocument().getElementsByTagName("property");
-		final DriverManagerDataSource ds = new DriverManagerDataSource();
+		final DriverManagerDataSource jpaDataSource = new DriverManagerDataSource();
 
 		for (int i = 0; i < nodes.getLength(); i++) {
 			final NamedNodeMap map = nodes.item(i).getAttributes();
 			final String key = map.getNamedItem("name").getNodeValue();
 			final String value = map.getNamedItem("value").getNodeValue();
 			if ("hibernate.connection.driver_class".equals(key)) {
-				ds.setDriverClassName(value);
+				jpaDataSource.setDriverClassName(value);
 			}
 			else if ("hibernate.connection.url".equals(key)) {
-				ds.setUrl(value);
+				jpaDataSource.setUrl(value);
 			}
 			else if ("hibernate.connection.username".equals(key)) {
-				ds.setUsername(value);
+				jpaDataSource.setUsername(value);
 			}
 			else if ("hibernate.connection.password".equals(key)) {
-				ds.setPassword(value);
+				jpaDataSource.setPassword(value);
 			}
 		}
-		DatabaseConfiguration dbc = new DatabaseConfiguration(ds, "configurazione", "chiave", "valore");
+
+		/* Caricamento configurazione */
+		DatabaseConfiguration dbc = new DatabaseConfiguration(jpaDataSource, "configurazione", "chiave", "valore");
 		return dbc;
 	}
 
