@@ -2,7 +2,7 @@ package it.albertus.spring.dao;
 
 import it.albertus.spring.model.Utente;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
