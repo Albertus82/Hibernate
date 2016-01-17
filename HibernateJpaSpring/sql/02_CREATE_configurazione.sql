@@ -5,3 +5,5 @@ CREATE TABLE configurazione
     data_inserimento   DATE DEFAULT SYSDATE CONSTRAINT nn1_configurazione_data_insert NOT NULL
 )
 /
+
+INSERT INTO configurazione (chiave, valore) VALUES ('utenti.lista', 'false');

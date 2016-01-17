@@ -6,6 +6,9 @@ import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.DatabaseConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -24,6 +27,8 @@ import org.w3c.dom.NodeList;
 @ComponentScan(basePackages = { "it.albertus.spring" }, excludeFilters = { @Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class) })
 @EnableTransactionManagement // Abilita l'AOP per la gestione delle transazioni.
 public class RootConfig {
+	
+	private static final Log log = LogFactory.getLog(RootConfig.class);
 
 	/**
 	 * Gestisce la transazionalita' dei metodi che accedono al database. In
@@ -39,7 +44,7 @@ public class RootConfig {
 	@Bean
 	public LocalEntityManagerFactoryBean entityManagerFactory() {
 		LocalEntityManagerFactoryBean emfb = new LocalEntityManagerFactoryBean();
-		emfb.setPersistenceUnitName("jpa_test");
+		emfb.setPersistenceUnitName("jpaPersistenceUnit");
 		return emfb;
 	}
 
@@ -54,14 +59,17 @@ public class RootConfig {
 			pspc.setProperties(ConfigurationConverter.getProperties(dbc));
 		}
 		catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Impossibile caricare la configurazione dal database");
+			log.fatal("Impossibile caricare la configurazione dal database: " + ExceptionUtils.getStackTrace(e));
 		}
 		return pspc;
 	}
 
 	@Bean
 	public static DatabaseConfiguration configuration() throws ConfigurationException {
+		return loadConfigurationFromDatabase();
+	}
+
+	private static DatabaseConfiguration loadConfigurationFromDatabase() throws ConfigurationException {
 		/* Estrazione parametri di connessione dal database dal persistence.xml di JPA */
 		final XMLConfiguration databaseConfig = new XMLConfiguration();
 		databaseConfig.load(WebConfig.class.getResourceAsStream("/META-INF/persistence.xml"));
